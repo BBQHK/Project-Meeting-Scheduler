@@ -23,6 +23,7 @@
 //
 //               佛祖保佑         永無BUG
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void displayMenu() {
@@ -65,8 +66,18 @@ void chooseMenuOption(){
   int opNum;
   printf("Enter an option: ");
   scanf("%d", &opNum);
-  if(opNum == 1){
+  if(opNum == 1){ // Create Project Team
     CreateProjectTeam();
+
+  }else if(opNum == 2){
+    printf("To be implement!\n");
+
+  }else if(opNum == 3){
+    printf("To be implement!\n");
+
+  }else if(opNum == 4){ // Exit
+    exit(0);
+
   }else{
     printf("Invalid number, please enter again!\n");
     chooseMenuOption();
