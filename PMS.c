@@ -76,8 +76,8 @@ void chooseMenuOption(){
     printf("To be implement!\n");
 
   }else if(opNum == 4){ // Exit
+    printf("See you next time :)\n");
     exit(0);
-
   }else{
     printf("Invalid number, please enter again!\n");
     chooseMenuOption();
