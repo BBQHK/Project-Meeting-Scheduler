@@ -26,6 +26,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "global.h"
+
+#include "create_project_team.c"
+
+
 void displayMenu() {
     printf("   ~~ WELCOME TO PolyStar ~~\n\n");
 
@@ -42,24 +47,26 @@ void displayMenu() {
     printf("   3c. YYYY (Attendance Report)\n\n");
 
     printf("4. Exit\n\n");
+
+    printf("5. Check the fucking list\n\n");
 }
 
 void chooseMenuOption();
 
-void CreateProjectTeam(){
-  char cmd[100];
-  printf("   ~~ Create Project Team ~~\n");
-  while(1){
-    printf("Enter> ");
-    scanf("%s", &cmd);
 
-    if(strcmp(cmd, "0")){ // if cmd != "0"
-      printf(">>>>>> %s\n", cmd);
-    }else{
-      displayMenu();
-      chooseMenuOption();
+void CheckTeamList(){
+    printf("\n");
+    printf("Check Team Mode\n");
+    int i;
+    for(i=0;i<teamsIndex;i++){
+        printf("Team : %s\n",teamLists[i].name);
+        printf("Project : %s\n", teamLists[i].project_name);
+        int j;
     }
-  }
+    printf("\n");
+
+    displayMenu();
+    chooseMenuOption();
 }
 
 void chooseMenuOption(){
@@ -68,9 +75,11 @@ void chooseMenuOption(){
   scanf("%d", &opNum);
   if(opNum == 1){ // Create Project Team
     CreateProjectTeam();
-
+    opNum=0;
   }else if(opNum == 2){
     printf("To be implement!\n");
+    displayMenu();
+    chooseMenuOption();
 
   }else if(opNum == 3){
     printf("To be implement!\n");
@@ -78,6 +87,9 @@ void chooseMenuOption(){
   }else if(opNum == 4){ // Exit
     printf("See you next time :)\n");
     exit(0);
+  }else if(opNum == 5){
+    printf("Check the fucking list :)\n");
+    CheckTeamList();
   }else{
     printf("Invalid number, please enter again!\n");
     chooseMenuOption();
