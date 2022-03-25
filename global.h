@@ -1,7 +1,7 @@
 struct Team
 {
-   char name[20];
-   char project_name[20];
+   char name[7];
+   char project_name[10];
    char members[4][20];
 };
 

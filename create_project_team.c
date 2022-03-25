@@ -8,10 +8,10 @@ void CreateProjectTeam(){
     printf("Enter> ");
     int i = 1;
     int NumOfMembers = 0;
-    char temp_name[20];
-    char temp_project_name[20];
+    char temp_name[7];
+    char temp_project_name[10];
     char temp_leader[20];
-    char temp_members[20][20];
+    char temp_members[4][20];
 
     while(1){
       scanf("%s", &cmd);
@@ -26,7 +26,6 @@ void CreateProjectTeam(){
           strcpy(temp_name, cmd);
           // strcpy(teamLists[teamsIndex].name, cmd);
       }else if(i == 2){
-          // printf("[Project] %s\n","Saved");
           strcpy(temp_project_name, cmd);
       }else if(i == 3){
           // printf("[Leader] %s\n","Saved");
@@ -65,8 +64,6 @@ void CreateProjectTeam(){
                 }
             }
           }
-
-
       }
       i++;
 
@@ -79,18 +76,24 @@ void CreateProjectTeam(){
     for(k = 0; k < teamsIndex; k++){
         // printf("[Check] team: %s\n",teamLists[k].name);
       if(!strcmp(teamLists[k].name, temp_name)){
-        printf("%s is already exist!\n", temp_name);
+        printf("[Warning] %s is already exist!\n", temp_name);
         CreateProjectTeam();
       }
+    }
+
+    if(temp_name[5] != temp_project_name[8]){
+      printf("[Warning] Team name and project name not match!\n");
+      CreateProjectTeam();
     }
 
     for(k = 0; k < teamsIndex; k++){
         // printf("[Check] team: %s\n",teamLists[k].name);
       if(!strcmp(teamLists[k].members[0], temp_leader)){
-        printf("%s is already working as another project manager!\n", temp_leader);
+        printf("[Warning] %s is already working as another project manager!\n", temp_leader);
         CreateProjectTeam();
       }
     }
+
     int a,b,c,d;
     int checkMemberFlag=0;
     for(a=0;a<teamsIndex;a++){
@@ -123,18 +126,18 @@ void CreateProjectTeam(){
                             checkTimes=temp2_times[h];
                             // printf("[Check Times : %s %d ; %s %d\n",team2_members[h],temp2_times[h],temp_members[g],temp2_times[h]);
                             if(checkMemberFlag==1){
-                              printf("[Warning]%s is already member! %d times so gg\n", team2_members[h],4);
+                              printf("[Warning] %s already involved in 3 projects! Create project team fail.\n", team2_members[h]);
                               CreateProjectTeam();
                             }
                             if(checkTimes==0){
                               if(checkMemberFlag==0){
                                 temp2_times[h]=3;
-                                printf("[Warning]%s is already member! %d times\n", team2_members[h],2);
+                                // printf("[Warning]%s already involved in other projects! %d times\n", team2_members[h],2);
                               }
                             }else if(checkTimes==3){
                               if(checkMemberFlag==0){
                                 temp2_times[h]=4;
-                                printf("[Warning]%s is already member! %d times\n", team2_members[h],3);
+                                // printf("[Warning]%s already involved in other projects! %d times\n", team2_members[h],3);
                               }
                             }
                             break;
@@ -147,7 +150,7 @@ void CreateProjectTeam(){
         }
     }
     if(i<4){
-      printf("create error\n");
+      printf("[Warning] Create error\n");
       CreateProjectTeam();
     }
 
