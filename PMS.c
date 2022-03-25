@@ -30,7 +30,6 @@
 
 #include "create_project_team.c"
 
-
 void displayMenu() {
     printf("   ~~ WELCOME TO PolyStar ~~\n\n");
 
@@ -53,19 +52,26 @@ void displayMenu() {
 
 void chooseMenuOption();
 
-
 void CheckTeamList(){
-    printf("\n");
     printf("Check Team Mode\n");
     int i;
     for(i=0;i<teamsIndex;i++){
         printf("Team : %s\n",teamLists[i].name);
         printf("Project : %s\n", teamLists[i].project_name);
         int j;
+        int membersCounter = 0;
+        for(j = 0;j < 4; j++){
+          if(strcmp(teamLists[i].members[j], "")){
+            membersCounter++;
+          }
+        }
+        printf("Number of members : %d\n",membersCounter);
+        for(j = 0;j < membersCounter; j++){
+          printf("%s member : %s\n", teamLists[i].name, teamLists[i].members[j]);
+        }
+        printf("\n");
     }
-    printf("\n");
-
-    displayMenu();
+    
     chooseMenuOption();
 }
 
