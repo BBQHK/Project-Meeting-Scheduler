@@ -5,8 +5,18 @@ struct Team
    char members[4][20];
 };
 
+struct Booking
+{
+  char teamName[7];
+  char date[11];
+  int hour;
+  int duration;
+};
+
 struct Team teamLists[26];
+struct Booking bookingLists[170];
 int teamsIndex = 0;
+int bookingIndex = 0;
 
 //pad test
 int temp2_times[2];

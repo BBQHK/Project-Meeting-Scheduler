@@ -29,6 +29,7 @@
 #include "global.h"
 
 #include "create_project_team.c"
+#include "project_meeting_request.c"
 
 void displayMenu() {
     printf("   ~~ WELCOME TO PolyStar ~~\n\n");
@@ -48,9 +49,24 @@ void displayMenu() {
     printf("4. Exit\n\n");
 
     printf("5. Check the fucking list\n\n");
+    printf("6. Check the booking list\n\n");
 }
 
 void chooseMenuOption();
+
+void CheckBookingList(){
+  printf("Check Booking List Mode\n");
+  int i;
+  for(i=0;i<bookingIndex;i++){
+      printf("Team : %s\n",bookingLists[i].teamName);
+      printf("Date : %s\n", bookingLists[i].date);
+      printf("Hour : %d\n", bookingLists[i].hour);
+      printf("Duration : %d\n", bookingLists[i].duration);
+      printf("\n");
+  }
+
+  chooseMenuOption();
+}
 
 void CheckTeamList(){
     printf("Check Team Mode\n");
@@ -71,31 +87,35 @@ void CheckTeamList(){
         }
         printf("\n");
     }
-    
+
     chooseMenuOption();
 }
 
 void chooseMenuOption(){
-  int opNum;
+  char opNum[3];
   printf("Enter an option: ");
-  scanf("%d", &opNum);
-  if(opNum == 1){ // Create Project Team
+  scanf("%s", &opNum);
+  if(!strcmp(opNum, "1")){ // Create Project Team
     CreateProjectTeam();
-    opNum=0;
-  }else if(opNum == 2){
-    printf("To be implement!\n");
-    displayMenu();
-    chooseMenuOption();
+    // opNum=0;
+    strcpy(opNum, "0");
+  }else if(!strcmp(opNum, "2a")){
+    SingleInput(); // Project Meeting Request Single Input
+    // printf("To be implement!\n");
+    // displayMenu();
+    // chooseMenuOption();
 
-  }else if(opNum == 3){
+  }else if(!strcmp(opNum, "3")){
     printf("To be implement!\n");
 
-  }else if(opNum == 4){ // Exit
+  }else if(!strcmp(opNum, "4")){ // Exit
     printf("See you next time :)\n");
     exit(0);
-  }else if(opNum == 5){
+  }else if(!strcmp(opNum, "5")){
     printf("Check the fucking list :)\n");
     CheckTeamList();
+  }else if(!strcmp(opNum, "6")){
+    CheckBookingList();
   }else{
     printf("Invalid number, please enter again!\n");
     chooseMenuOption();
