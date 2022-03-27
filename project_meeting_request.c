@@ -41,8 +41,8 @@ void SingleInput(){
 void BatchInput(){
 	char dir[50];
 	char cmd[100];
-	
-	printf(" ~~ Project Meeting Request Single Input ~~\n");
+
+	printf(" ~~ Project Meeting Request Batch Input ~~\n");
 	while(1){
 		printf("Enter file name> ");
 		scanf("%s", &cmd);
@@ -58,7 +58,7 @@ void BatchInput(){
 		stpcpy(dir,"data/");
 		strcat(dir,cmd);
 		fp = fopen(dir, "r");
-		
+
 		if (fp == NULL)
 			exit(EXIT_FAILURE);
 		while ((read = getline(&line, &len, fp)) != -1) {

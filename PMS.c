@@ -58,11 +58,12 @@ void CheckBookingList(){
   printf("Check Booking List Mode\n");
   int i;
   for(i=0;i<bookingIndex;i++){
+      printf("Booking request %d\n", i+1);
       printf("Team : %s\n",bookingLists[i].teamName);
       printf("Date : %s\n", bookingLists[i].date);
       printf("Hour : %d\n", bookingLists[i].hour);
       printf("Duration : %d\n", bookingLists[i].duration);
-      printf("\n");
+      printf("--------------------------\n");
   }
 
   chooseMenuOption();
@@ -97,13 +98,15 @@ void chooseMenuOption(){
   scanf("%s", &opNum);
   if(!strcmp(opNum, "1")){ // Create Project Team
     CreateProjectTeam();
-    // opNum=0;
     strcpy(opNum, "0");
+
   }else if(!strcmp(opNum, "2a")){
     SingleInput(); // Project Meeting Request Single Input
-    // printf("To be implement!\n");
-    // displayMenu();
-    // chooseMenuOption();
+    strcpy(opNum, "0");
+
+  }else if(!strcmp(opNum, "2b")){
+    BatchInput(); // Project Meeting Request Batch Input
+    strcpy(opNum, "0");
 
   }else if(!strcmp(opNum, "3")){
     printf("To be implement!\n");
