@@ -56,21 +56,28 @@ void displayMenu() {
 void chooseMenuOption();
 
 void CheckBookingList(){
+  printf("\n\n");
   printf("Check Booking List Mode\n");
-  int i;
-  for(i=0;i<bookingIndex;i++){
-      printf("Booking request %d\n", i+1);
-      printf("Team : %s\n",bookingLists[i].teamName);
-      printf("Date : %s\n", bookingLists[i].date);
-      printf("Hour : %d\n", bookingLists[i].hour);
-      printf("Duration : %d\n", bookingLists[i].duration);
-      printf("--------------------------\n");
-  }
-
+  // int i;
+  // for(i=0;i<bookingIndex;i++){
+  //     printf("Booking request %d\n", i+1);
+  //     printf("Team : %s\n",bookingLists[i].teamName);
+  //     printf("Date : %s\n", bookingLists[i].date);
+  //     printf("Hour : %d\n", bookingLists[i].hour);
+  //     printf("Duration : %d\n", bookingLists[i].duration);
+  //     printf("--------------------------\n");
+  // }
+    printf("%-12s %-10s %-12s %-5s %-2s\n","Request Id", "Team", "Date", "Hour", "Duration");
+    int i;
+    for(i=0;i<bookingIndex;i++){
+      printf("%-12d %-10s %-12s %-2d:00 %-2d\n",i+1, bookingLists[i].teamName, bookingLists[i].date, bookingLists[i].hour, bookingLists[i].duration);
+    }
+    printf("\n\n");
   chooseMenuOption();
 }
 
 void CheckTeamList(){
+    printf("\n\n");
     printf("Check Team Mode\n");
     // int i;
     // for(i=0;i<teamsIndex;i++){
@@ -89,7 +96,6 @@ void CheckTeamList(){
     //     }
     //     printf("\n");
     // }
-    printf("\n\n");
     printf("%-10s %-10s %-20s %-10s %-10s %-10s %-10s\n","Team", "Project", "Number of members", "Leader", "Member 1", "Member 2", "Member 3");
     int i;
     for(i=0;i<teamsIndex;i++){      
@@ -101,7 +107,7 @@ void CheckTeamList(){
           }
         }
         printf("%-10s %-10s %-20d %-10s %-10s %-10s %-10s\n",teamLists[i].name, teamLists[i].project_name, membersCounter, 
-        teamLists[i].name, teamLists[i].members[0], teamLists[i].members[1], teamLists[i].members[2], teamLists[i].members[3]);
+        teamLists[i].members[0], teamLists[i].members[1], teamLists[i].members[2], teamLists[i].members[3]);
     }
     printf("\n\n");
     chooseMenuOption();
@@ -131,6 +137,28 @@ void Testcase(){
   printf("Project %s is created.\n","Team_A");
   printf("Project %s is created.\n","Team_B");
   printf("Project %s is created.\n","Team_C");
+
+  strcpy(bookingLists[bookingIndex].teamName, "Team_A");
+  strcpy(bookingLists[bookingIndex].date, "2022-04-25");
+  bookingLists[bookingIndex].hour = 9;
+  bookingLists[bookingIndex].duration = 2;
+  bookingIndex++;
+
+  strcpy(bookingLists[bookingIndex].teamName, "Team_B");
+  strcpy(bookingLists[bookingIndex].date, "2022-04-26");
+  bookingLists[bookingIndex].hour = 10;
+  bookingLists[bookingIndex].duration = 3;
+  bookingIndex++;
+
+  strcpy(bookingLists[bookingIndex].teamName, "Team_A");
+  strcpy(bookingLists[bookingIndex].date, "2022-04-26");
+  bookingLists[bookingIndex].hour = 11;
+  bookingLists[bookingIndex].duration = 3;
+  bookingIndex++;
+
+  printf("Teams %s request at %s has been received.\n",bookingLists[0].teamName,bookingLists[0].date);
+  printf("Teams %s request at %s has been received.\n",bookingLists[1].teamName,bookingLists[1].date);
+  printf("Teams %s request at %s has been received.\n",bookingLists[2].teamName,bookingLists[2].date);
   chooseMenuOption();
 }
 
