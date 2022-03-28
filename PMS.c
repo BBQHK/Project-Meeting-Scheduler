@@ -50,6 +50,7 @@ void displayMenu() {
 
     printf("5. Check the fucking list\n\n");
     printf("6. Check the booking list\n\n");
+    printf("7. Add the fucking test case\n\n");
 }
 
 void chooseMenuOption();
@@ -94,7 +95,7 @@ void CheckTeamList(){
     for(i=0;i<teamsIndex;i++){      
         int j;
         int membersCounter = 0;
-        for(j = 0;j < 4; j++){
+        for(j = 1;j < 4; j++){
           if(strcmp(teamLists[i].members[j], "")){
             membersCounter++;
           }
@@ -104,6 +105,33 @@ void CheckTeamList(){
     }
     printf("\n\n");
     chooseMenuOption();
+}
+
+void Testcase(){
+  strcpy(teamLists[0].name, "Team_A");
+  strcpy(teamLists[0].project_name, "Project_A");
+  strcpy(teamLists[0].members[0], "Alan");
+  strcpy(teamLists[0].members[1], "Cathy");
+  strcpy(teamLists[0].members[2], "Fanny");
+  strcpy(teamLists[0].members[3], "Helen");
+  teamsIndex++;  
+  strcpy(teamLists[1].name, "Team_B");
+  strcpy(teamLists[1].project_name, "Project_B");
+  strcpy(teamLists[1].members[0], "Alan1");
+  strcpy(teamLists[1].members[1], "Fanny");
+  strcpy(teamLists[1].members[2], "Helen");
+  teamsIndex++;
+  strcpy(teamLists[2].name, "Team_C");
+  strcpy(teamLists[2].project_name, "Project_C");
+  strcpy(teamLists[2].members[0], "Alan2");
+  strcpy(teamLists[2].members[1], "Cathy");
+  strcpy(teamLists[2].members[2], "Fanny");
+  teamsIndex++;
+
+  printf("Project %s is created.\n","Team_A");
+  printf("Project %s is created.\n","Team_B");
+  printf("Project %s is created.\n","Team_C");
+  chooseMenuOption();
 }
 
 void chooseMenuOption(){
@@ -133,6 +161,8 @@ void chooseMenuOption(){
     CheckTeamList();
   }else if(!strcmp(opNum, "6")){
     CheckBookingList();
+  }else if(!strcmp(opNum, "7")){
+    Testcase();
   }else{
     printf("Invalid number, please enter again!\n");
     chooseMenuOption();
