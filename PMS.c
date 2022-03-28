@@ -71,10 +71,27 @@ void CheckBookingList(){
 
 void CheckTeamList(){
     printf("Check Team Mode\n");
+    // int i;
+    // for(i=0;i<teamsIndex;i++){
+    //     printf("Team : %s\n",teamLists[i].name);
+    //     printf("Project : %s\n", teamLists[i].project_name);
+    //     int j;
+    //     int membersCounter = 0;
+    //     for(j = 0;j < 4; j++){
+    //       if(strcmp(teamLists[i].members[j], "")){
+    //         membersCounter++;
+    //       }
+    //     }
+    //     printf("Number of members : %d\n",membersCounter);
+    //     for(j = 0;j < membersCounter; j++){
+    //       printf("%s member : %s\n", teamLists[i].name, teamLists[i].members[j]);
+    //     }
+    //     printf("\n");
+    // }
+    printf("\n\n");
+    printf("%-10s %-10s %-20s %-10s %-10s %-10s %-10s\n","Team", "Project", "Number of members", "Leader", "Member 1", "Member 2", "Member 3");
     int i;
-    for(i=0;i<teamsIndex;i++){
-        printf("Team : %s\n",teamLists[i].name);
-        printf("Project : %s\n", teamLists[i].project_name);
+    for(i=0;i<teamsIndex;i++){      
         int j;
         int membersCounter = 0;
         for(j = 0;j < 4; j++){
@@ -82,13 +99,10 @@ void CheckTeamList(){
             membersCounter++;
           }
         }
-        printf("Number of members : %d\n",membersCounter);
-        for(j = 0;j < membersCounter; j++){
-          printf("%s member : %s\n", teamLists[i].name, teamLists[i].members[j]);
-        }
-        printf("\n");
+        printf("%-10s %-10s %-20d %-10s %-10s %-10s %-10s\n",teamLists[i].name, teamLists[i].project_name, membersCounter, 
+        teamLists[i].name, teamLists[i].members[0], teamLists[i].members[1], teamLists[i].members[2], teamLists[i].members[3]);
     }
-
+    printf("\n\n");
     chooseMenuOption();
 }
 
