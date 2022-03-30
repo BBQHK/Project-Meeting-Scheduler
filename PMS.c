@@ -30,6 +30,7 @@
 
 #include "create_project_team.c"
 #include "project_meeting_request.c"
+#include "meeting_schedule.c"
 
 void displayMenu() {
     printf("   ~~ WELCOME TO PolyStar ~~\n\n");
@@ -123,14 +124,14 @@ void Testcase(){
   teamsIndex++;  
   strcpy(teamLists[1].name, "Team_B");
   strcpy(teamLists[1].project_name, "Project_B");
-  strcpy(teamLists[1].members[0], "Alan1");
-  strcpy(teamLists[1].members[1], "Fanny");
+  strcpy(teamLists[1].members[0], "Fanny");
+  strcpy(teamLists[1].members[1], "Alan");
   strcpy(teamLists[1].members[2], "Helen");
   teamsIndex++;
   strcpy(teamLists[2].name, "Team_C");
   strcpy(teamLists[2].project_name, "Project_C");
-  strcpy(teamLists[2].members[0], "Alan2");
-  strcpy(teamLists[2].members[1], "Cathy");
+  strcpy(teamLists[2].members[0], "Cathy");
+  strcpy(teamLists[2].members[1], "Helen");
   strcpy(teamLists[2].members[2], "Fanny");
   teamsIndex++;
 
@@ -150,7 +151,7 @@ void Testcase(){
   bookingLists[bookingIndex].duration = 3;
   bookingIndex++;
 
-  strcpy(bookingLists[bookingIndex].teamName, "Team_A");
+  strcpy(bookingLists[bookingIndex].teamName, "Team_C");
   strcpy(bookingLists[bookingIndex].date, "2022-04-26");
   bookingLists[bookingIndex].hour = 11;
   bookingLists[bookingIndex].duration = 3;
@@ -178,9 +179,9 @@ void chooseMenuOption(){
     BatchInput(); // Project Meeting Request Batch Input
     strcpy(opNum, "0");
 
-  }else if(!strcmp(opNum, "3")){
-    printf("To be implement!\n");
-
+  }else if(!strcmp(opNum, "3a")){
+    pms_FCFS();
+	strcpy(opNum, "0");
   }else if(!strcmp(opNum, "4")){ // Exit
     printf("See you next time :)\n");
     exit(0);
