@@ -26,8 +26,3 @@ int testFlag=0;
 int checkMemberFlag=0; // 1 = have problem
 
 int action_Create=0; // 0 = can create
-
-const char *staffName[8];
-staffName[0] = "Alan";staffName[1] = "Billy";staffName[2] = "Cathy";
-staffName[3] = "David";staffName[4] = "Eva";staffName[5] = "Fanny";
-staffName[6] = "Gary";staffName[7] = "Helen";
