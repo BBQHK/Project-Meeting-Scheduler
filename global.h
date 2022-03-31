@@ -26,3 +26,7 @@ int testFlag=0;
 int checkMemberFlag=0; // 1 = have problem
 
 int action_Create=0; // 0 = can create
+
+char staffNames[8][10] = {
+	"Alan","Billy","Cathy","David","Eva","Fanny","Gary","Helen"
+};
