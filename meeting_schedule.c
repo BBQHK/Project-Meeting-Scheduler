@@ -1,21 +1,26 @@
+#include <unistd.h>
+
+int isStaffInProject(char s[], char tn[]);
+int isMeetingConflict(struct Booking sbj,struct Booking bl[170],int index);
+
 void pms_FCFS(){
 	int pid, id, i, n;
 	int pipe_Staff[8][2];
 	int pipe_BI[2];
-	
+
 	struct Booking StaffBookingLists[170];
 	int StaffBookingIndex = 0;
-	
+
 	char dateStart[11];
 	char dateEnd[11];
 	printf("Enter date period > ");
 	scanf("%s", &dateStart);
 	scanf("%s", &dateEnd);
-	
+
 	printf(" *** Project Meeting ***\n");
 	printf("\nAlgorithm used: FCFS\n");
 	printf("Period: %s to %s\n",dateStart,dateEnd);
-	
+
 	if (pipe(pipe_BI) < 0) {
 		printf("pipe_BI creation error\n");
 		exit(1);
@@ -41,7 +46,7 @@ void pms_FCFS(){
 			close(pipe_Staff[i][0]);
 		}
 		close(pipe_BI[1]);
-		
+
 		if ((n = read(pipe_Staff[id][0],StaffBookingLists,sizeof(StaffBookingLists))) > 0){
 			read(pipe_BI[0],&StaffBookingIndex,sizeof(StaffBookingIndex));
 			if(StaffBookingIndex>0){
@@ -55,12 +60,12 @@ void pms_FCFS(){
 				printf("no schedule\n");
 			}
 
-			
+
 		}else{
 			printf("<Child%d> pid %d: failed to check pipe_Staff\n",id,getpid());
 		}
 		printf("======================================================================\nStaff: %s\n\n\n",staffNames[id]);
-		
+
 		close(pipe_BI[0]);
 		close(pipe_Staff[id][0]);
 		exit(0);
@@ -74,10 +79,10 @@ void pms_FCFS(){
 			StaffBookingIndex = 0;
 			for(i=0;i<bookingIndex;i++){
 				if(strcmp(bookingLists[i].date,dateStart)<0 || strcmp(bookingLists[i].date,dateEnd)>0)continue;
-					
+
 				if(isStaffInProject(staffNames[id],bookingLists[i].teamName)==1){
 					if(isMeetingConflict(bookingLists[i],StaffBookingLists,StaffBookingIndex))continue;
-					
+
 					strcpy(StaffBookingLists[StaffBookingIndex].teamName, bookingLists[i].teamName);
 					strcpy(StaffBookingLists[StaffBookingIndex].date, bookingLists[i].date);
 					StaffBookingLists[StaffBookingIndex].hour = bookingLists[i].hour;
@@ -85,19 +90,19 @@ void pms_FCFS(){
 					StaffBookingIndex++;
 				}
 			}
-			
+
 			write(pipe_Staff[id][1],StaffBookingLists,sizeof(StaffBookingLists));
 			write(pipe_BI[1],&StaffBookingIndex,sizeof(StaffBookingIndex));
 			usleep(50);
 		}
-		
-		
+
+
 		printf("\n=============END=============\n");
 		close(pipe_BI[1]);
 		for(id =0;id<8;id++){
 			close(pipe_Staff[id][1]);
 		}
-		
+
 	}
 	usleep(10);
 	// displayMenu();
@@ -130,4 +135,3 @@ int isMeetingConflict(struct Booking sbj,struct Booking bl[170],int index){
 	}
 	return 0;
 }
-
