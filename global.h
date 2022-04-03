@@ -15,8 +15,10 @@ struct Booking
 
 struct Team teamLists[26];
 struct Booking bookingLists[170];
+struct Booking rBL[170];//rejected BookingLists
 int teamsIndex = 0;
 int bookingIndex = 0;
+int rBLIndex = 0;
 
 //pad test
 int temp2_times[2];
