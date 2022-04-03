@@ -65,7 +65,6 @@ Date            Start    End      Team            Project
 Staff: Gary
 
 
-booking reject:2022-04-26 10:00-13:00 Team_B Project_B
 
 Date            Start    End      Team            Project        
 ======================================================================
@@ -75,3 +74,11 @@ Date            Start    End      Team            Project
 Staff: Helen
 
 
+*** Meeting Request - REHECTED ***
+
+There are 1 requests rejected for the required period. 
+
+======================================================================
+0.   Team_B 2022-04-26 10:00 3
+
+======================================================================
