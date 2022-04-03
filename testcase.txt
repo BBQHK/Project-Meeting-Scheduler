@@ -8,3 +8,20 @@ Team_E Project_E Alan Cathy Fanny Helen
 leader bug:
 Team_A Project_A Alan Cathy Fanny Helen
 Team_B Project_B Alan Cathy Fanny Helen
+
+/////////////////////////////////////
+正確既booking:
+Team_A 2022-04-25 09:00 2
+
+check error:
+
+錯誤日期 2022-04-25 - 2022-05-14
+Team_A 2022-03-23 09:00 2
+Team_A 2022-04-23 09:00 2
+Team_A 2022-04-24 09:00 2
+Team_A 2022-04-31 09:00 2
+Team_A 2022-05-16 09:00 2
+
+禮拜日 唔比用2022-05-01 2022-05-08
+Team_A 2022-05-01 09:00 2
+Team_A 2022-05-08 09:00 2
