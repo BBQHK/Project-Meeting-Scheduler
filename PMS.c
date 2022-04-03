@@ -169,7 +169,7 @@ void Testcase(){
   strcpy(bookingLists[bookingIndex].teamName, "Team_C");
   strcpy(bookingLists[bookingIndex].date, "2022-04-26");
   bookingLists[bookingIndex].hour = 11;
-  bookingLists[bookingIndex].duration = 3;
+  bookingLists[bookingIndex].duration = 2;
   bookingIndex++;
 
   strcpy(bookingLists[bookingIndex].teamName, "Team_D");
@@ -210,6 +210,9 @@ void chooseMenuOption(){
 
   }else if(!strcmp(opNum, "3a")){
     pms_FCFS();
+	strcpy(opNum, "0");
+  }else if(!strcmp(opNum, "3b")){
+    pms_SJF();
 	strcpy(opNum, "0");
   }else if(!strcmp(opNum, "4")){ // Exit
     printf("See you next time :)\n");
