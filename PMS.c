@@ -44,7 +44,7 @@ void displayMenu() {
 
     printf("3. Print Meeting Schedule\n");
     printf("   3a. FCFS (First Come First Served)\n");
-    printf("   3b. XXXX (Another algorithm implemented)\n");
+    printf("   3b. SJF (Shortest Job First)\n");
     printf("   3c. YYYY (Attendance Report)\n\n");
 
     printf("4. Exit\n\n");
@@ -99,7 +99,7 @@ void CheckTeamList(){
     // }
     printf("%-10s %-10s %-20s %-10s %-10s %-10s %-10s\n","Team", "Project", "Number of members", "Leader", "Member 1", "Member 2", "Member 3");
     int i;
-    for(i=0;i<teamsIndex;i++){      
+    for(i=0;i<teamsIndex;i++){
         int j;
         int membersCounter = 0;
         for(j = 1;j < 4; j++){
@@ -107,7 +107,7 @@ void CheckTeamList(){
             membersCounter++;
           }
         }
-        printf("%-10s %-10s %-20d %-10s %-10s %-10s %-10s\n",teamLists[i].name, teamLists[i].project_name, membersCounter, 
+        printf("%-10s %-10s %-20d %-10s %-10s %-10s %-10s\n",teamLists[i].name, teamLists[i].project_name, membersCounter,
         teamLists[i].members[0], teamLists[i].members[1], teamLists[i].members[2], teamLists[i].members[3]);
     }
     printf("\n\n");
@@ -121,7 +121,7 @@ void Testcase(){
   strcpy(teamLists[teamsIndex].members[1], "Cathy");
   strcpy(teamLists[teamsIndex].members[2], "Fanny");
   strcpy(teamLists[teamsIndex].members[3], "Helen");
-  teamsIndex++;  
+  teamsIndex++;
   strcpy(teamLists[teamsIndex].name, "Team_B");
   strcpy(teamLists[teamsIndex].project_name, "Project_B");
   strcpy(teamLists[teamsIndex].members[0], "Fanny");
