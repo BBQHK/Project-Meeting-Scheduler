@@ -1,13 +1,16 @@
-test case:
+正確既入team:
 Team_A Project_A Alan Cathy Fanny Helen
-Team_B Project_B Alan1 Fanny Helen
-Team_C Project_C Alan2 Cathy Fanny
-Team_D Project_D Alan3 Cathy Fanny
-Team_E Project_E Alan Cathy Fanny Helen
+Team_B Project_B Fanny Alan Helen
+Team_C Project_C Cathy Helen Fanny
+Team_D Project_D Billy David Cathy
+Team_E Project_E Gary Eva Fanny David
 
-leader bug:
-Team_A Project_A Alan Cathy Fanny Helen
-Team_B Project_B Alan Cathy Fanny Helen
+錯誤test case1 (leader多過一次) (記住打曬上面既先開始做error)
+Team_F Project_F Gary Alan Fanny David
+Team_F Project_F Alan Gary Fanny David
+
+錯誤test case2 (Member多過三次) (記住打曬上面既先開始做error)
+Team_F Project_F David Cathy Fanny Helen (Cathy已經三次)
 
 /////////////////////////////////////
 正確既booking:
