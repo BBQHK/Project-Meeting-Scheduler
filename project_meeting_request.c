@@ -6,12 +6,15 @@ void SingleInput(){
     int i = 1;
 	//Team_A 2022-04-25 09:00 2
 
-	int bookingMonthFlag=0,bookingDayFlag=0,bookingWorkDayFlag=0,bookingTimeFlag=0; // control the error 
+	int bookingWorkingTimeFlag=0,bookingDayFlag=0,bookingWorkDayFlag=0,bookingTimeFlag=0; // control the error 
 	// 4個先放一放啲value
 	char bookingTeamName[20];
 	char bookingTime[20];
 	int bookingHour;
 	int bookingDuration;
+
+	// save住個cmd先做checking
+	int time1;
 
     while(1){
       scanf("%s", &cmd);
@@ -61,7 +64,7 @@ void SingleInput(){
 		bookingHour = atoi(temp);
         //bookingLists[bookingIndex].hour = atoi(temp);
 
-		int time1 = atoi(temp);
+		time1 = atoi(temp);
 		if(time1 <9 || time1>18){
 			bookingTimeFlag=1;
 		}
@@ -69,6 +72,9 @@ void SingleInput(){
         //printf("%s\n", cmd);
         //bookingLists[bookingIndex].duration = atoi(cmd);
 		bookingDuration = atoi(cmd);
+		if(bookingDuration+time1>18){
+			bookingWorkingTimeFlag=1;
+		}
       }
       i++;
 
@@ -79,7 +85,7 @@ void SingleInput(){
     }
     
 
-	if(bookingDayFlag==0 && bookingWorkDayFlag==0 && bookingTimeFlag==0){
+	if(bookingDayFlag==0 && bookingWorkDayFlag==0 && bookingTimeFlag==0 && bookingWorkingTimeFlag==0){
 		strcpy(bookingLists[bookingIndex].teamName, bookingTeamName);
 		strcpy(bookingLists[bookingIndex].date, bookingTime);
         bookingLists[bookingIndex].hour = bookingHour;
@@ -96,6 +102,9 @@ void SingleInput(){
 	}
     if(bookingTimeFlag==1){
 		printf("%s\n","Wrong Working Time (You should input 09:00 to 18:00)");
+	}
+	if(bookingWorkingTimeFlag==1){
+		printf("%s\n","Wrong Working Time (You can not still working after than 18:00)");
 	}
   }
 }
