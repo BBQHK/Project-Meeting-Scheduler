@@ -11,14 +11,21 @@ struct Booking
   char date[11];
   int hour;
   int duration;
+  int isAttended[5];
+  //0:Has the booking been executed? , 1:is first member Attended ...
 };
 
+
+
 struct Team teamLists[26];
-struct Booking bookingLists[170];
-struct Booking rBL[170];//rejected BookingLists
 int teamsIndex = 0;
+
+struct Booking bookingLists[170];
 int bookingIndex = 0;
+
+struct Booking rBL[170];//rejected BookingLists
 int rBLIndex = 0;
+
 
 //pad test
 int temp2_times[2];
