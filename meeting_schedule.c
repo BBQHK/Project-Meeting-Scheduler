@@ -4,8 +4,10 @@ int isStaffInProject(char s[], char tn[]);
 int isMeetingConflict_FCFS(struct Booking sbj,struct Booking bl[170],int index);
 int isMeetingConflict_SJF(struct Booking sbj,struct Booking bl[170],int index);
 int isMeetingInList(struct Booking sbj,struct Booking bl[170],int index);
+int rBLSetEmpty();
 
-void pms_FCFS(){
+int pms_FCFS(){
+	rBLSetEmpty();
 	int pid, id, i, n;
 	int pipe_Staff[8][2];
 	int pipe_BI[2];
@@ -18,15 +20,16 @@ void pms_FCFS(){
 	char dateEnd[11];
 	printf("Enter date period > ");//test input: 2022-04-24 2022-04-27
 	scanf("%s", &dateStart);
+	if(strcmp(dateStart,"0")==0)return 0;
 	scanf("%s", &dateEnd);
-
+	
 	printf(" *** Project Meeting ***\n");
 	printf("\nAlgorithm used: FCFS\n");
 	printf("Period: %s to %s\n",dateStart,dateEnd);
 	
 	
 	FILE *fp = NULL;
-	fp = fopen("output/GXX_FCFS_Schd_01.dat", "w+");
+	fp = fopen("output/G10_FCFS_Schd_01.dat", "w+");
 	if(fp == NULL)
 	{
 		printf("File open error!\n");
@@ -67,7 +70,7 @@ void pms_FCFS(){
 		
 		if ((n = read(pipe_Staff[id][0],StaffBookingLists,sizeof(StaffBookingLists))) > 0){
 			read(pipe_BI[0],&StaffBookingIndex,sizeof(StaffBookingIndex));
-			fp = fopen("output/GXX_FCFS_Schd_01.dat", "a");
+			fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
 			if(fp == NULL){printf("File open error!\n");exit(1);}
 			if(StaffBookingIndex>0){
 				printf("\n%-15.10s %-8.7s %-8.7s %-15.10s %-15.10s\n======================================================================\n","Date","Start","End","Team","Project");
@@ -111,8 +114,8 @@ void pms_FCFS(){
 			for(i=0;i<bookingIndex;i++){
 				if(strcmp(bookingLists[i].date,dateStart)<0 || strcmp(bookingLists[i].date,dateEnd)>0)continue;
 
-				if(isStaffInProject(staffNames[id],bookingLists[i].teamName)==1){
-					if(isMeetingInList(bookingLists[i],rBL,rBLIndex))continue;
+				if(isStaffInProject(staffNames[id],bookingLists[i].teamName)>=0){
+					//if(isMeetingInList(bookingLists[i],rBL,rBLIndex))continue;
 					if(isMeetingConflict_FCFS(bookingLists[i],StaffBookingLists,StaffBookingIndex))continue;
 
 					strcpy(StaffBookingLists[StaffBookingIndex].teamName, bookingLists[i].teamName);
@@ -140,12 +143,12 @@ void pms_FCFS(){
 
 	}
 	usleep(10);
-	// displayMenu();
-	// chooseMenuOption();
+	return 1;
 }
 
 
-void pms_SJF(){
+int pms_SJF(){
+	rBLSetEmpty();
 	int pid, id, i, n;
 	int pipe_Staff[8][2];
 	int pipe_BI[2];
@@ -158,15 +161,16 @@ void pms_SJF(){
 	char dateEnd[11];
 	printf("Enter date period > ");//test input: 2022-04-24 2022-04-27
 	scanf("%s", &dateStart);
+	if(strcmp(dateStart,"0")==0)return 0;
 	scanf("%s", &dateEnd);
 
 	printf(" *** Project Meeting ***\n");
-	printf("\nAlgorithm used: FCFS\n");
+	printf("\nAlgorithm used: SJF\n");
 	printf("Period: %s to %s\n",dateStart,dateEnd);
 	
 	
 	FILE *fp = NULL;
-	fp = fopen("output/GXX_FCFS_Schd_01.dat", "w+");
+	fp = fopen("output/G10_FCFS_Schd_01.dat", "w+");
 	if(fp == NULL)
 	{
 		printf("File open error!\n");
@@ -207,7 +211,7 @@ void pms_SJF(){
 		
 		if ((n = read(pipe_Staff[id][0],StaffBookingLists,sizeof(StaffBookingLists))) > 0){
 			read(pipe_BI[0],&StaffBookingIndex,sizeof(StaffBookingIndex));
-			fp = fopen("output/GXX_FCFS_Schd_01.dat", "a");
+			fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
 			if(fp == NULL){printf("File open error!\n");exit(1);}
 			if(StaffBookingIndex>0){
 				printf("\n%-15.10s %-8.7s %-8.7s %-15.10s %-15.10s\n======================================================================\n","Date","Start","End","Team","Project");
@@ -251,9 +255,8 @@ void pms_SJF(){
 			for(i=0;i<bookingIndex;i++){
 				if(strcmp(bookingLists[i].date,dateStart)<0 || strcmp(bookingLists[i].date,dateEnd)>0)continue;
 
-				if(isStaffInProject(staffNames[id],bookingLists[i].teamName)==1){
-					if(isMeetingInList(bookingLists[i],rBL,rBLIndex))
-						continue;
+				if(isStaffInProject(staffNames[id],bookingLists[i].teamName)>=0){
+					//if(isMeetingInList(bookingLists[i],rBL,rBLIndex)) continue;
 					int conIndex = -1;//the index of Meeting if Conflict
 					conIndex = isMeetingConflict_SJF(bookingLists[i],StaffBookingLists,StaffBookingIndex);
 					if(conIndex==-1){
@@ -293,8 +296,7 @@ void pms_SJF(){
 
 	}
 	usleep(10);
-	// displayMenu();
-	// chooseMenuOption();
+	return 1;
 }
 
 
@@ -312,12 +314,12 @@ int isStaffInProject(char s[], char tn[]){
 		if(strcmp(teamLists[i].name,tn)==0){
 			for(j=0;j<4;j++){
 				if(strcmp(teamLists[i].members[j],s)==0)
-				return 1;
+				return j;
 			}
 			break;
 		}
 	}
-	return 0;
+	return -1;
 }
 
 int isMeetingInList(struct Booking sbj,struct Booking bl[170],int index){
@@ -327,10 +329,10 @@ int isMeetingInList(struct Booking sbj,struct Booking bl[170],int index){
 			strcmp(bl[i].date,sbj.date)==0 &&
 			bl[i].hour == sbj.hour &&
 			bl[i].duration == sbj.duration){
-			return 1;
+			return i;
 		}
 	}
-	return 0;
+	return -1;
 }
 
 int isMeetingConflict_FCFS(struct Booking sbj,struct Booking bl[170],int index){
@@ -339,6 +341,7 @@ int isMeetingConflict_FCFS(struct Booking sbj,struct Booking bl[170],int index){
 		if(strcmp(bl[i].date,sbj.date)<0 || strcmp(bl[i].date,sbj.date)>0)continue;
 		if((sbj.hour>=bl[i].hour && sbj.hour<(bl[i].hour+bl[i].duration)) || (sbj.hour<=bl[i].hour && (sbj.hour+sbj.duration)>bl[i].hour)){
 			printf("booking reject:%s %02d:00-%2d:00 %s Project_%c\n",sbj.date,sbj.hour,(sbj.hour+sbj.duration),sbj.teamName,sbj.teamName[5]);
+			if(isMeetingInList(sbj,rBL,rBLIndex)>=0) return i;
 			FILE *fp = NULL;
 			fp = fopen("output/GXX_FCFS_Schd_01.dat", "a");
 			fprintf(fp, "booking reject:%s %02d:00-%2d:00 %s Project_%c\n",sbj.date,sbj.hour,(sbj.hour+sbj.duration),sbj.teamName,sbj.teamName[5]);
@@ -360,29 +363,27 @@ int isMeetingConflict_SJF(struct Booking sbj,struct Booking bl[170],int index){
 	for(i=0;i<index;i++){
 		if(strcmp(bl[i].date,sbj.date)<0 || strcmp(bl[i].date,sbj.date)>0)continue;
 		if((sbj.hour>=bl[i].hour && sbj.hour<(bl[i].hour+bl[i].duration)) || (sbj.hour<=bl[i].hour && (sbj.hour+sbj.duration)>bl[i].hour)){
-			char temp_teamName[7];
-			char temp_date[11];
-			int temp_hour;
-			int temp_duration;
+			struct Booking temp;
 			if (bl[i].duration>sbj.duration){
-				stpcpy(temp_teamName,bl[i].teamName); stpcpy(temp_date,bl[i].date);
-				temp_hour = bl[i].hour; temp_duration = bl[i].duration;
+				stpcpy(temp.teamName,bl[i].teamName); stpcpy(temp.date,bl[i].date);
+				temp.hour = bl[i].hour; temp.duration = bl[i].duration;
 			}else{
 				printf("%s ---%s\n",bl[i].teamName,sbj.teamName);
-				stpcpy(temp_teamName,sbj.teamName); stpcpy(temp_date,sbj.date);
-				temp_hour = sbj.hour; temp_duration = sbj.duration;
+				stpcpy(temp.teamName,sbj.teamName); stpcpy(temp.date,sbj.date);
+				temp.hour = sbj.hour; temp.duration = sbj.duration;
 				i=-2;
 			}
-			printf("booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp_date,temp_hour,(temp_hour+temp_duration),temp_teamName,temp_teamName[5]);
+			printf("booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp.date,temp.hour,(temp.hour+temp.duration),temp.teamName,temp.teamName[5]);
+			if(isMeetingInList(temp,rBL,rBLIndex)>=0) return i;
 			FILE *fp = NULL;
-			fp = fopen("output/GXX_FCFS_Schd_01.dat", "a");
-			fprintf(fp, "booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp_date,temp_hour,(temp_hour+temp_duration),temp_teamName,temp_teamName[5]);
+			fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
+			fprintf(fp, "booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp.date,temp.hour,(temp.hour+temp.duration),temp.teamName,temp.teamName[5]);
 			fclose(fp);
 			
-			strcpy(rBL[rBLIndex].teamName, temp_teamName);
-			strcpy(rBL[rBLIndex].date, temp_date);
-			rBL[rBLIndex].hour = temp_hour;
-			rBL[rBLIndex].duration = temp_duration;
+			strcpy(rBL[rBLIndex].teamName, temp.teamName);
+			strcpy(rBL[rBLIndex].date, temp.date);
+			rBL[rBLIndex].hour = temp.hour;
+			rBL[rBLIndex].duration = temp.duration;
 			rBLIndex++;
 			return i;
 		}
@@ -392,7 +393,7 @@ int isMeetingConflict_SJF(struct Booking sbj,struct Booking bl[170],int index){
 
 int printBookingLists(struct Booking bl[170],int index){
 	FILE *fp = NULL;
-	fp = fopen("output/GXX_FCFS_Schd_01.dat", "a");
+	fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
 	
 	printf("*** Meeting Request - REHECTED ***\n\nThere are %d requests rejected for the required period. \n\n======================================================================\n",index);
 	
@@ -406,4 +407,8 @@ int printBookingLists(struct Booking bl[170],int index){
 	fprintf(fp, "\n======================================================================\n");
 	fclose(fp);
 	return 1;
+}
+
+int rBLSetEmpty(){
+	rBLIndex=0;
 }
