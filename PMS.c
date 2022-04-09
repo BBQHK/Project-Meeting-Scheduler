@@ -31,6 +31,7 @@
 #include "create_project_team.c"
 #include "project_meeting_request.c"
 #include "meeting_schedule.c"
+#include "Attendance.c"
 
 void displayMenu() {
     printf("   ~~ WELCOME TO PolyStar ~~\n\n");
@@ -114,84 +115,7 @@ void CheckTeamList(){
     chooseMenuOption();
 }
 
-void Testcase(){
-  strcpy(teamLists[teamsIndex].name, "Team_A");
-  strcpy(teamLists[teamsIndex].project_name, "Project_A");
-  strcpy(teamLists[teamsIndex].members[0], "Alan");
-  strcpy(teamLists[teamsIndex].members[1], "Cathy");
-  strcpy(teamLists[teamsIndex].members[2], "Fanny");
-  strcpy(teamLists[teamsIndex].members[3], "Helen");
-  teamsIndex++;
-  strcpy(teamLists[teamsIndex].name, "Team_B");
-  strcpy(teamLists[teamsIndex].project_name, "Project_B");
-  strcpy(teamLists[teamsIndex].members[0], "Fanny");
-  strcpy(teamLists[teamsIndex].members[1], "Alan");
-  strcpy(teamLists[teamsIndex].members[2], "Helen");
-  teamsIndex++;
-  strcpy(teamLists[teamsIndex].name, "Team_C");
-  strcpy(teamLists[teamsIndex].project_name, "Project_C");
-  strcpy(teamLists[teamsIndex].members[0], "Cathy");
-  strcpy(teamLists[teamsIndex].members[1], "Helen");
-  strcpy(teamLists[teamsIndex].members[2], "Fanny");
-  teamsIndex++;
-  strcpy(teamLists[teamsIndex].name, "Team_D");
-  strcpy(teamLists[teamsIndex].project_name, "Project_D");
-  strcpy(teamLists[teamsIndex].members[0], "Billy");
-  strcpy(teamLists[teamsIndex].members[1], "David");
-  strcpy(teamLists[teamsIndex].members[2], "Cathy");
-  strcpy(teamLists[teamsIndex].members[3], "Eva");
-  teamsIndex++;
-  strcpy(teamLists[teamsIndex].name, "Team_E");
-  strcpy(teamLists[teamsIndex].project_name, "Project_E");
-  strcpy(teamLists[teamsIndex].members[0], "Gary");
-  strcpy(teamLists[teamsIndex].members[1], "Eva");
-  strcpy(teamLists[teamsIndex].members[2], "David");
-  teamsIndex++;
-
-  printf("Project %s is created.\n","Team_A");
-  printf("Project %s is created.\n","Team_B");
-  printf("Project %s is created.\n","Team_C");
-  printf("Project %s is created.\n","Team_D");
-  printf("Project %s is created.\n","Team_E");
-
-  strcpy(bookingLists[bookingIndex].teamName, "Team_A");
-  strcpy(bookingLists[bookingIndex].date, "2022-04-25");
-  bookingLists[bookingIndex].hour = 9;
-  bookingLists[bookingIndex].duration = 2;
-  bookingIndex++;
-
-  strcpy(bookingLists[bookingIndex].teamName, "Team_B");
-  strcpy(bookingLists[bookingIndex].date, "2022-04-26");
-  bookingLists[bookingIndex].hour = 10;
-  bookingLists[bookingIndex].duration = 3;
-  bookingIndex++;
-
-  strcpy(bookingLists[bookingIndex].teamName, "Team_C");
-  strcpy(bookingLists[bookingIndex].date, "2022-04-26");
-  bookingLists[bookingIndex].hour = 11;
-  bookingLists[bookingIndex].duration = 2;
-  bookingIndex++;
-
-  strcpy(bookingLists[bookingIndex].teamName, "Team_D");
-  strcpy(bookingLists[bookingIndex].date, "2022-04-26");
-  bookingLists[bookingIndex].hour = 14;
-  bookingLists[bookingIndex].duration = 2;
-  bookingIndex++;
-
-  strcpy(bookingLists[bookingIndex].teamName, "Team_E");
-  strcpy(bookingLists[bookingIndex].date, "2022-04-27");
-  bookingLists[bookingIndex].hour = 9;
-  bookingLists[bookingIndex].duration = 2;
-  bookingIndex++;
-
-  printf("Teams %s request at %s has been received.\n",bookingLists[0].teamName,bookingLists[0].date);
-  printf("Teams %s request at %s has been received.\n",bookingLists[1].teamName,bookingLists[1].date);
-  printf("Teams %s request at %s has been received.\n",bookingLists[2].teamName,bookingLists[2].date);
-  printf("Teams %s request at %s has been received.\n",bookingLists[3].teamName,bookingLists[3].date);
-  printf("Teams %s request at %s has been received.\n",bookingLists[4].teamName,bookingLists[4].date);
-  chooseMenuOption();
-}
-
+#include "FastTestCase.c"
 void chooseMenuOption(){
   char opNum[3];
   printf("Enter an option: ");
@@ -208,12 +132,25 @@ void chooseMenuOption(){
     BatchInput(); // Project Meeting Request Batch Input
     strcpy(opNum, "0");
 
+  }else if(!strcmp(opNum, "2c")){
+    MeetingAttendance(); 
+    strcpy(opNum, "0");
+
   }else if(!strcmp(opNum, "3a")){
     pms_FCFS();
 	strcpy(opNum, "0");
+	displayMenu();
+	chooseMenuOption();
   }else if(!strcmp(opNum, "3b")){
     pms_SJF();
 	strcpy(opNum, "0");
+	displayMenu();
+	chooseMenuOption();
+  }else if(!strcmp(opNum, "3c")){
+	PrintAttendanceRecord();
+	strcpy(opNum, "0");
+	displayMenu();
+	chooseMenuOption();
   }else if(!strcmp(opNum, "4")){ // Exit
     printf("See you next time :)\n");
     exit(0);
