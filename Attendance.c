@@ -1,14 +1,20 @@
-//test input: 
-//Team_B 2022-04-26 10:00 3
-//Fanny Helen 0 <-input separately
-//Team_D 2022-04-26 14:00 2
-//David Cathy 0 <-input separately
+//test input: Can copy one line at a time
+//Team_B 2022-04-26 10:00 3 Fanny Helen 0
+//Team_B 2022-04-26 14:00 3 Fanny Alan 0
+//Team_D 2022-04-26 14:00 2 Billy Cathy 0
+//Team_D 2022-04-27 14:00 2 David Cathy Eva 0
+
+int TeamMeetingHeld(char tn[]);
+int getTeamMemberName(int id,char tn[]);
+void PrintAttendanceRecord();
+
 void MeetingAttendance(){
 	char teamName[7];
 	char date[11];
 	char hour[6];
 	char duration[2];
 	struct Booking object;
+	initMeetingRecord();
 	printf(" ~~ Meeting Attendance ~~\n");
 	while(1){
 		printf("Enter Meeting Info (Team_? YYYY-MM-DD HH:MM N)> ");
@@ -62,13 +68,12 @@ void PrintAttendanceRecord(){
 	fprintf(fp, "\n%-15.10s %-8.7s %-8.7s %-15.10s %-15.10s\n======================================================================","Date","Start","End","Team","Project");
 	
 
-	int i;
+	int i,j;
 	for(i=0;i<bookingIndex;i++){
-		
 		if(bookingLists[i].isAttended[0]==1){
+			int teamID = TeamMeetingHeld(bookingLists[i].teamName);
 			printf("%-15.10s %02d:00    %2d:00    %-15.10s Project_%c\n",bookingLists[i].date,bookingLists[i].hour,(bookingLists[i].hour+bookingLists[i].duration),bookingLists[i].teamName,bookingLists[i].teamName[5]);
 			fprintf(fp, "%-15.10s %02d:00    %2d:00    %-15.10s Project_%c\n",bookingLists[i].date,bookingLists[i].hour,(bookingLists[i].hour+bookingLists[i].duration),bookingLists[i].teamName,bookingLists[i].teamName[5]);
-			int j;
 			for(j=0;j<4;j++){
 				getTeamMemberName(j,bookingLists[i].teamName);
 				if(!strcmp(NameReturn,"0"))break;
@@ -77,6 +82,7 @@ void PrintAttendanceRecord(){
 				strcat(memNameTmp,NameReturn);
 				
 				if(bookingLists[i].isAttended[j+1] == 1){
+					teamLists[teamID].meetingRecord[j+1]++;//employees attended the meeting
 					strcat(memNameTmp," O\n");
 				}else{
 					strcat(memNameTmp," X\n");
@@ -88,13 +94,32 @@ void PrintAttendanceRecord(){
 		printf("\n");
 		fprintf(fp, "\n");
 	}
+	printf("======================================================================\n");
+	fprintf(fp, "======================================================================\n");
+	for(i=0;i<teamsIndex;i++){
+		if(teamLists[i].meetingRecord[0]>0){
+			printf("%s : [%d] meeting held\n",teamLists[i].name,teamLists[i].meetingRecord[0]);
+			fprintf(fp, "%s : [%d] meeting held\n",teamLists[i].name,teamLists[i].meetingRecord[0]);
+			for(j=0;j<4;j++){
+				getTeamMemberName(j,teamLists[i].name);
+				if(!strcmp(NameReturn,"0"))break;
+				char memNameTmp[25];
+				sprintf(memNameTmp,"------ %-10.5s : meeting attended:%d\n",NameReturn,teamLists[i].meetingRecord[j+1]);
+				printf(memNameTmp);
+				fprintf(fp, memNameTmp);
+			}
+		}
+		printf("\n");
+		fprintf(fp, "\n");
+	}
+	
 	fclose(fp);
 }
 
 int getTeamMemberName(int id,char tn[]){
-	char temp[] = "00";
+	char temp[] = "0";
 	int i;
-	for(i=0;i<26;i++){
+	for(i=0;i<teamsIndex;i++){
 		if(strcmp(teamLists[i].name,tn)==0){
 			stpcpy(NameReturn,teamLists[i].members[id]);
 			int temp = NameReturn[0];
@@ -105,4 +130,25 @@ int getTeamMemberName(int id,char tn[]){
 	}
 	strcpy(NameReturn,"0");
 	return 0;
+}
+
+int TeamMeetingHeld(char tn[]){
+	int i;
+	for(i=0;i<teamsIndex;i++){
+		if(strcmp(teamLists[i].name,tn)==0){
+			teamLists[i].meetingRecord[0]++;
+			return i;
+		}
+	}
+	return -1;
+}
+
+int initMeetingRecord(){
+	int i,j;
+	for(i=0;i<teamsIndex;i++){
+		for(j=0;j<5;j++){
+			teamLists[i].meetingRecord[j]=0;
+		}
+	}
+	return 1;
 }
