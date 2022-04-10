@@ -9,14 +9,38 @@ Date            Start    End      Team            Project
 
 
 2022-04-26      14:00    16:00    Team_D          Project_D
-------Billy X
-------David O
+------Billy O
+------David X
 ------Cathy O
 ------Eva X
 
 
 
+2022-04-26      14:00    17:00    Team_B          Project_B
+------Fanny O
+------Alan O
+------Helen X
 
 
+2022-04-27      14:00    16:00    Team_D          Project_D
+------Billy X
+------David O
+------Cathy O
+------Eva O
+
+
+======================================================================
+
+Team_B : [2] meeting held
+------ Fanny      : meeting attended:2
+------ Alan       : meeting attended:1
+------ Helen      : meeting attended:1
+
+
+Team_D : [2] meeting held
+------ Billy      : meeting attended:1
+------ David      : meeting attended:1
+------ Cathy      : meeting attended:2
+------ Eva        : meeting attended:1
 
 
