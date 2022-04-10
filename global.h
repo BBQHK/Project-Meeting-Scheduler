@@ -3,6 +3,8 @@ struct Team
    char name[7];
    char project_name[10];
    char members[4][20];
+   int meetingRecord[5];
+   //0:Number of meetings held , 1:First member's meeting attendance...
 };
 
 struct Booking
@@ -11,7 +13,7 @@ struct Booking
   char date[11];
   int hour;
   int duration;
-  int isAttended[5];
+  int isAttended[5];//only store 0/1
   //0:Has the booking been executed? , 1:is first member Attended ...
 };
 
