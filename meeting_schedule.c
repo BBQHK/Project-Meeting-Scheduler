@@ -178,7 +178,7 @@ int pms_SJF(){
 	}
 	
 	fprintf(fp, " *** Project Meeting ***\n");
-	fprintf(fp, "\nAlgorithm used: FCFS\n");
+	fprintf(fp, "\nAlgorithm used: SJF\n");
 	fprintf(fp,"Period: %s to %s\n",dateStart,dateEnd);
 	fclose(fp);
 
