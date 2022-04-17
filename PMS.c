@@ -50,9 +50,9 @@ void displayMenu() {
 
     printf("4. Exit\n\n");
 
-    printf("5. Check the fucking list\n\n");
-    printf("6. Check the booking list\n\n");
-    printf("7. Add the fucking test case\n\n");
+    printf("5. Demo: Check the team list\n\n");
+    printf("6. Demo: Check the booking list\n\n");
+    printf("7. Demo: Add the test case\n\n");
 }
 
 void chooseMenuOption();
@@ -155,7 +155,7 @@ void chooseMenuOption(){
     printf("See you next time :)\n");
     exit(0);
   }else if(!strcmp(opNum, "5")){
-    printf("Check the fucking list :)\n");
+    printf("Check the team list :)\n");
     CheckTeamList();
   }else if(!strcmp(opNum, "6")){
     CheckBookingList();
