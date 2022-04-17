@@ -170,7 +170,7 @@ int pms_SJF(){
 	
 	
 	FILE *fp = NULL;
-	fp = fopen("output/G10_FCFS_Schd_01.dat", "w+");
+	fp = fopen("output/G10_SJF_Schd_01.dat", "w+");
 	if(fp == NULL)
 	{
 		printf("File open error!\n");
@@ -211,7 +211,7 @@ int pms_SJF(){
 		
 		if ((n = read(pipe_Staff[id][0],StaffBookingLists,sizeof(StaffBookingLists))) > 0){
 			read(pipe_BI[0],&StaffBookingIndex,sizeof(StaffBookingIndex));
-			fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
+			fp = fopen("output/G10_SJF_Schd_01.dat", "a");
 			if(fp == NULL){printf("File open error!\n");exit(1);}
 			if(StaffBookingIndex>0){
 				printf("\n%-15.10s %-8.7s %-8.7s %-15.10s %-15.10s\n======================================================================\n","Date","Start","End","Team","Project");
@@ -343,7 +343,7 @@ int isMeetingConflict_FCFS(struct Booking sbj,struct Booking bl[170],int index){
 			printf("booking reject:%s %02d:00-%2d:00 %s Project_%c\n",sbj.date,sbj.hour,(sbj.hour+sbj.duration),sbj.teamName,sbj.teamName[5]);
 			if(isMeetingInList(sbj,rBL,rBLIndex)>=0) return i;
 			FILE *fp = NULL;
-			fp = fopen("output/GXX_FCFS_Schd_01.dat", "a");
+			fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
 			fprintf(fp, "booking reject:%s %02d:00-%2d:00 %s Project_%c\n",sbj.date,sbj.hour,(sbj.hour+sbj.duration),sbj.teamName,sbj.teamName[5]);
 			fclose(fp);
 			
@@ -376,7 +376,7 @@ int isMeetingConflict_SJF(struct Booking sbj,struct Booking bl[170],int index){
 			printf("booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp.date,temp.hour,(temp.hour+temp.duration),temp.teamName,temp.teamName[5]);
 			if(isMeetingInList(temp,rBL,rBLIndex)>=0) return i;
 			FILE *fp = NULL;
-			fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
+			fp = fopen("output/G10_SJF_Schd_01.dat", "a");
 			fprintf(fp, "booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp.date,temp.hour,(temp.hour+temp.duration),temp.teamName,temp.teamName[5]);
 			fclose(fp);
 			
