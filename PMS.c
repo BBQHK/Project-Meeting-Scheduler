@@ -46,7 +46,7 @@ void displayMenu() {
     printf("3. Print Meeting Schedule\n");
     printf("   3a. FCFS (First Come First Served)\n");
     printf("   3b. SJF (Shortest Job First)\n");
-    printf("   3c. YYYY (Attendance Report)\n\n");
+    printf("   3c. ATRE (Attendance Report)\n\n");
 
     printf("4. Exit\n\n");
 
