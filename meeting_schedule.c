@@ -133,7 +133,7 @@ int pms_FCFS(){
 		}
 		printf("\n=============END=============\n");
 		
-		printBookingLists(rBL,rBLIndex);
+		printBookingLists(rBL,rBLIndex,"output/G10_FCFS_Schd_01.dat");
 		
 		close(pipe_Fin[0]);
 		close(pipe_BI[1]);
@@ -286,7 +286,7 @@ int pms_SJF(){
 
 		printf("\n=============END=============\n");
 		
-		printBookingLists(rBL,rBLIndex);
+		printBookingLists(rBL,rBLIndex,"output/G10_SJF_Schd_01.dat");
 		
 		close(pipe_Fin[0]);
 		close(pipe_BI[1]);
@@ -391,9 +391,9 @@ int isMeetingConflict_SJF(struct Booking sbj,struct Booking bl[170],int index){
 	return -1;
 }
 
-int printBookingLists(struct Booking bl[170],int index){
+int printBookingLists(struct Booking bl[170],int index,char fileName[]){
 	FILE *fp = NULL;
-	fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
+	fp = fopen(fileName, "a");
 	
 	printf("*** Meeting Request - REHECTED ***\n\nThere are %d requests rejected for the required period. \n\n======================================================================\n",index);
 	
