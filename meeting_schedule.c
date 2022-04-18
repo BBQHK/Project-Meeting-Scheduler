@@ -501,7 +501,7 @@ int summary(){
 	printf("      Number of Request Rejected: %d (%.1f%)\n\n",Total_ReqRej_FCFS, (double)Total_ReqRej_FCFS/bookingIndex*100);
 	
 	printf("Utilization of Time slot:\n");
-	printf("      Accepted Request:    -%.1f%\n", (double)Total_ReqAcc_SJF/bookingIndex*100);
+	printf("      Accepted Request:    -%.1f%\n", (double)Total_ReqAcc_FCFS/bookingIndex*100);
 	
 	int i;
 	for(i=0;i<teamsIndex;i++){
