@@ -46,7 +46,8 @@ void displayMenu() {
     printf("3. Print Meeting Schedule\n");
     printf("   3a. FCFS (First Come First Served)\n");
     printf("   3b. SJF (Shortest Job First)\n");
-    printf("   3c. ATRE (Attendance Report)\n\n");
+    printf("   3c. ATRE (Attendance Report)\n");
+	printf("   3d. Summary\n\n");
 
     printf("4. Exit\n\n");
 
@@ -148,6 +149,16 @@ void chooseMenuOption(){
 	chooseMenuOption();
   }else if(!strcmp(opNum, "3c")){
 	PrintAttendanceRecord();
+	strcpy(opNum, "0");
+	displayMenu();
+	chooseMenuOption();
+  }else if(!strcmp(opNum, "3d")){
+	AEFlag=1;
+	pms_FCFS();
+	pms_SJF();
+	PrintAttendanceRecord();
+	summary();
+	AEFlag=0;
 	strcpy(opNum, "0");
 	displayMenu();
 	chooseMenuOption();
