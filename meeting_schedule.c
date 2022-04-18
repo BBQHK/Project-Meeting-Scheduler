@@ -496,7 +496,7 @@ int summary(){
 	getTeamAccRecinfo();
 	
 	printf("Performance:--FCFS\n");
-	printf("Total Number of Request Received: %d (%.1f%)\n",bookingIndex);
+	printf("Total Number of Request Received: %d\n",bookingIndex);
 	printf("      Number of Request Accepted: %d (%.1f%)\n",Total_ReqAcc_FCFS, (double)Total_ReqAcc_FCFS/bookingIndex*100);
 	printf("      Number of Request Rejected: %d (%.1f%)\n\n",Total_ReqRej_FCFS, (double)Total_ReqRej_FCFS/bookingIndex*100);
 	
@@ -514,7 +514,7 @@ int summary(){
 	
 	
 	printf("\n\nPerformance:--SJF\n");
-	printf("Total Number of Request Received: %d (%.1f%)\n",bookingIndex);
+	printf("Total Number of Request Received: %d\n",bookingIndex);
 	printf("      Number of Request Accepted: %d (%.1f%)\n",Total_ReqAcc_SJF, (double)Total_ReqAcc_SJF/bookingIndex*100);
 	printf("      Number of Request Rejected: %d (%.1f%)\n\n",Total_ReqRej_SJF, (double)Total_ReqRej_SJF/bookingIndex*100);
 	
