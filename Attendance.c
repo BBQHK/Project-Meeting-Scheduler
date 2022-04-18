@@ -1,9 +1,12 @@
-//test input: Can copy one line at a time
-//Team_B 2022-04-26 10:00 3 Fanny Helen 0
-//Team_B 2022-04-26 14:00 3 Fanny Alan 0
-//Team_D 2022-04-26 14:00 2 Billy Cathy 0
-//Team_D 2022-04-27 14:00 2 David Cathy Eva 0
+/***
+test input: Can copy all in once
 
+Team_B 2022-04-26 10:00 3 Fanny Helen 0
+Team_B 2022-04-26 14:00 3 Fanny Alan 0
+Team_D 2022-04-26 14:00 2 Billy Cathy 0
+Team_D 2022-04-27 14:00 2 David Cathy Eva 0
+
+***/
 int TeamMeetingHeld(char tn[]);
 int getTeamMemberName(int id,char tn[]);
 void PrintAttendanceRecord();
@@ -60,7 +63,7 @@ void MeetingAttendance(){
 }
 char NameReturn[20];
 void PrintAttendanceRecord(){
-		FILE *fp = NULL;
+	FILE *fp = NULL;
 	fp = fopen("output/G10_MeetingAttendanceRecord.dat", "w+");
 	if(fp == NULL){printf("File open error!\n");exit(1);}
 	fprintf(fp, " ~~~ Meeting Attendance Record ~~~\n");
@@ -104,7 +107,8 @@ void PrintAttendanceRecord(){
 				getTeamMemberName(j,teamLists[i].name);
 				if(!strcmp(NameReturn,"0"))break;
 				char memNameTmp[25];
-				sprintf(memNameTmp,"------ %-10.5s : meeting attended:%d\n",NameReturn,teamLists[i].meetingRecord[j+1]);
+				sprintf(memNameTmp,"------ %-10.5s : meeting attended:%.1f%\n",NameReturn,(double)teamLists[i].meetingRecord[j+1]/teamLists[i].meetingRecord[0]*100);
+				saveStaffAtten(teamLists[i].members[j],(double)teamLists[i].meetingRecord[j+1]/teamLists[i].meetingRecord[0]*100);
 				printf(memNameTmp);
 				fprintf(fp, memNameTmp);
 			}
@@ -114,7 +118,19 @@ void PrintAttendanceRecord(){
 	}
 	
 	fclose(fp);
+	printf("======================================================================\n");
 }
+
+int saveStaffAtten(char name[], double value){
+	int i;
+	for(i=0;i<8;i++){
+		if(!strcmp(staffNames[i],name)){
+			staffAtten[i] = value;
+		}
+	}
+	return 1;
+}
+
 
 int getTeamMemberName(int id,char tn[]){
 	char temp[] = "0";
