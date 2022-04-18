@@ -14,4 +14,5 @@ Chang Wai Chung       21052435d
 LAM Tsz Chung         21031707d
 
 How to compile: gcc G10_PMS.c -o PMS
+
 How to run: ./PMS
