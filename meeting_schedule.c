@@ -7,7 +7,7 @@ int isMeetingInList(struct Booking sbj,struct Booking bl[170],int index);
 int rBLSetEmpty();
 
 int pms_FCFS(){
-	rBLSetEmpty();
+	rBLIndex_FCFS=0;
 	int pid, id, i, n;
 	int pipe_Staff[8][2];
 	int pipe_BI[2];
@@ -18,10 +18,16 @@ int pms_FCFS(){
 
 	char dateStart[11];
 	char dateEnd[11];
-	printf("Enter date period > ");//test input: 2022-04-24 2022-04-27
-	scanf("%s", &dateStart);
-	if(strcmp(dateStart,"0")==0)return 0;
-	scanf("%s", &dateEnd);
+	if(AEFlag==0){
+		printf("Enter date period > ");//test input: 2022-04-24 2022-04-27
+		scanf("%s", &dateStart);
+		if(strcmp(dateStart,"0")==0)return 0;
+		scanf("%s", &dateEnd);
+	}else{
+		stpcpy(dateStart,"2022-04-25");
+		stpcpy(dateEnd,"2022-05-14");
+	}
+	
 	
 	printf(" *** Project Meeting ***\n");
 	printf("\nAlgorithm used: FCFS\n");
@@ -115,7 +121,6 @@ int pms_FCFS(){
 				if(strcmp(bookingLists[i].date,dateStart)<0 || strcmp(bookingLists[i].date,dateEnd)>0)continue;
 
 				if(isStaffInProject(staffNames[id],bookingLists[i].teamName)>=0){
-					//if(isMeetingInList(bookingLists[i],rBL,rBLIndex))continue;
 					if(isMeetingConflict_FCFS(bookingLists[i],StaffBookingLists,StaffBookingIndex))continue;
 
 					strcpy(StaffBookingLists[StaffBookingIndex].teamName, bookingLists[i].teamName);
@@ -133,7 +138,10 @@ int pms_FCFS(){
 		}
 		printf("\n=============END=============\n");
 		
-		printBookingLists(rBL,rBLIndex,"output/G10_FCFS_Schd_01.dat");
+		
+		Total_ReqRej_FCFS = rBLIndex_FCFS;
+		Total_ReqAcc_FCFS = bookingIndex - rBLIndex_FCFS;
+		printBookingLists(rBL_FCFS,rBLIndex_FCFS,"output/G10_FCFS_Schd_01.dat");
 		
 		close(pipe_Fin[0]);
 		close(pipe_BI[1]);
@@ -148,7 +156,7 @@ int pms_FCFS(){
 
 
 int pms_SJF(){
-	rBLSetEmpty();
+	rBLIndex_SJF=0;
 	int pid, id, i, n;
 	int pipe_Staff[8][2];
 	int pipe_BI[2];
@@ -159,10 +167,16 @@ int pms_SJF(){
 
 	char dateStart[11];
 	char dateEnd[11];
-	printf("Enter date period > ");//test input: 2022-04-24 2022-04-27
-	scanf("%s", &dateStart);
-	if(strcmp(dateStart,"0")==0)return 0;
-	scanf("%s", &dateEnd);
+	
+	if(AEFlag==0){
+		printf("Enter date period > ");//test input: 2022-04-24 2022-04-27
+		scanf("%s", &dateStart);
+		if(strcmp(dateStart,"0")==0)return 0;
+		scanf("%s", &dateEnd);
+	}else{
+		stpcpy(dateStart,"2022-04-25");
+		stpcpy(dateEnd,"2022-05-14");
+	}
 
 	printf(" *** Project Meeting ***\n");
 	printf("\nAlgorithm used: SJF\n");
@@ -256,7 +270,6 @@ int pms_SJF(){
 				if(strcmp(bookingLists[i].date,dateStart)<0 || strcmp(bookingLists[i].date,dateEnd)>0)continue;
 
 				if(isStaffInProject(staffNames[id],bookingLists[i].teamName)>=0){
-					//if(isMeetingInList(bookingLists[i],rBL,rBLIndex)) continue;
 					int conIndex = -1;//the index of Meeting if Conflict
 					conIndex = isMeetingConflict_SJF(bookingLists[i],StaffBookingLists,StaffBookingIndex);
 					if(conIndex==-1){
@@ -286,7 +299,9 @@ int pms_SJF(){
 
 		printf("\n=============END=============\n");
 		
-		printBookingLists(rBL,rBLIndex,"output/G10_SJF_Schd_01.dat");
+		Total_ReqRej_SJF = rBLIndex_SJF;
+		Total_ReqAcc_SJF = bookingIndex - rBLIndex_SJF;
+		printBookingLists(rBL_SJF,rBLIndex_SJF,"output/G10_SJF_Schd_01.dat");
 		
 		close(pipe_Fin[0]);
 		close(pipe_BI[1]);
@@ -335,23 +350,24 @@ int isMeetingInList(struct Booking sbj,struct Booking bl[170],int index){
 	return -1;
 }
 
+
 int isMeetingConflict_FCFS(struct Booking sbj,struct Booking bl[170],int index){
 	int i;
 	for(i=0;i<index;i++){
 		if(strcmp(bl[i].date,sbj.date)<0 || strcmp(bl[i].date,sbj.date)>0)continue;
 		if((sbj.hour>=bl[i].hour && sbj.hour<(bl[i].hour+bl[i].duration)) || (sbj.hour<=bl[i].hour && (sbj.hour+sbj.duration)>bl[i].hour)){
 			printf("booking reject:%s %02d:00-%2d:00 %s Project_%c\n",sbj.date,sbj.hour,(sbj.hour+sbj.duration),sbj.teamName,sbj.teamName[5]);
-			if(isMeetingInList(sbj,rBL,rBLIndex)>=0) return i;
+			if(isMeetingInList(sbj,rBL_FCFS,rBLIndex_FCFS)>=0) return i;
 			FILE *fp = NULL;
 			fp = fopen("output/G10_FCFS_Schd_01.dat", "a");
 			fprintf(fp, "booking reject:%s %02d:00-%2d:00 %s Project_%c\n",sbj.date,sbj.hour,(sbj.hour+sbj.duration),sbj.teamName,sbj.teamName[5]);
 			fclose(fp);
 			
-			strcpy(rBL[rBLIndex].teamName, sbj.teamName);
-			strcpy(rBL[rBLIndex].date, sbj.date);
-			rBL[rBLIndex].hour = sbj.hour;
-			rBL[rBLIndex].duration = sbj.duration;
-			rBLIndex++;
+			strcpy(rBL_FCFS[rBLIndex_FCFS].teamName, sbj.teamName);
+			strcpy(rBL_FCFS[rBLIndex_FCFS].date, sbj.date);
+			rBL_FCFS[rBLIndex_FCFS].hour = sbj.hour;
+			rBL_FCFS[rBLIndex_FCFS].duration = sbj.duration;
+			rBLIndex_FCFS++;
 			return 1;
 		}
 	}
@@ -374,17 +390,17 @@ int isMeetingConflict_SJF(struct Booking sbj,struct Booking bl[170],int index){
 				i=-2;
 			}
 			printf("booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp.date,temp.hour,(temp.hour+temp.duration),temp.teamName,temp.teamName[5]);
-			if(isMeetingInList(temp,rBL,rBLIndex)>=0) return i;
+			if(isMeetingInList(temp,rBL_SJF,rBLIndex_SJF)>=0) return i;
 			FILE *fp = NULL;
 			fp = fopen("output/G10_SJF_Schd_01.dat", "a");
 			fprintf(fp, "booking reject:%s %02d:00-%2d:00 %s Project_%c\n",temp.date,temp.hour,(temp.hour+temp.duration),temp.teamName,temp.teamName[5]);
 			fclose(fp);
 			
-			strcpy(rBL[rBLIndex].teamName, temp.teamName);
-			strcpy(rBL[rBLIndex].date, temp.date);
-			rBL[rBLIndex].hour = temp.hour;
-			rBL[rBLIndex].duration = temp.duration;
-			rBLIndex++;
+			strcpy(rBL_SJF[rBLIndex_SJF].teamName, temp.teamName);
+			strcpy(rBL_SJF[rBLIndex_SJF].date, temp.date);
+			rBL_SJF[rBLIndex_SJF].hour = temp.hour;
+			rBL_SJF[rBLIndex_SJF].duration = temp.duration;
+			rBLIndex_SJF++;
 			return i;
 		}
 	}
@@ -409,6 +425,118 @@ int printBookingLists(struct Booking bl[170],int index,char fileName[]){
 	return 1;
 }
 
-int rBLSetEmpty(){
-	rBLIndex=0;
+int getAddStaffRrAr(int value, char name[],int type){
+	int i=0;
+	for(i=0;i<8;i++){
+		if(!strcmp(staffNames[i],name)){
+			if(type==0){
+				staffRr[i] = staffRr[i]+value;
+				return staffRr[i];
+			}else if(type==1){
+				staffAr_FCFS[i] = staffAr_FCFS[i]+value;
+				return staffAr_FCFS[i];
+			}else{
+				staffAr_SJF[i] = staffAr_SJF[i]+value;
+				return staffAr_SJF[i];
+			}
+		}
+	}
+	return-1;
 }
+
+
+void getTeamAccRecinfo(){
+	int i,j,k;
+	for(i=0;i<bookingIndex;i++){
+		for(j=0;j<teamsIndex;j++){
+			if(!strcmp(bookingLists[i].teamName,teamLists[j].name)){
+				teamLists[j].ReqRec++;
+				for(k=0;k<4;k++){
+					getAddStaffRrAr(1,teamLists[j].members[k],0);
+				}
+			}
+		}
+	}
+	
+	for(i=0;i<rBLIndex_FCFS;i++){
+		for(j=0;j<teamsIndex;j++){
+			if(!strcmp(rBL_FCFS[i].teamName,teamLists[j].name)){
+				teamLists[j].ReqAcc_FCFS++;
+				for(k=0;k<4;k++){
+					getAddStaffRrAr(1,teamLists[j].members[k],1);
+				}
+			}
+		}
+	}
+	for(i=0;i<rBLIndex_SJF;i++){
+		for(j=0;j<teamsIndex;j++){
+			if(!strcmp(rBL_SJF[i].teamName,teamLists[j].name)){
+				teamLists[j].ReqAcc_SJF++;
+				for(k=0;k<4;k++){
+					getAddStaffRrAr(1,teamLists[j].members[k],2);
+				}
+			}
+		}
+	}
+	for(i=0;i<8;i++){
+		staffAr_FCFS[i] = staffRr[i] - staffAr_FCFS[i];
+		staffAr_SJF[i] = staffRr[i] - staffAr_SJF[i];
+	}
+	for(i=0;i<teamsIndex;i++){
+		teamLists[i].ReqAcc_FCFS = teamLists[i].ReqRec - teamLists[i].ReqAcc_FCFS;
+		teamLists[i].ReqAcc_SJF = teamLists[i].ReqRec - teamLists[i].ReqAcc_SJF;
+	}
+	
+}
+
+
+int summary(){
+	
+	
+	getTeamAccRecinfo();
+	
+	printf("Performance:--FCFS\n");
+	printf("Total Number of Request Received: %d (%.1f%)\n",bookingIndex);
+	printf("      Number of Request Accepted: %d (%.1f%)\n",Total_ReqAcc_FCFS, (double)Total_ReqAcc_FCFS/bookingIndex*100);
+	printf("      Number of Request Rejected: %d (%.1f%)\n\n",Total_ReqRej_FCFS, (double)Total_ReqRej_FCFS/bookingIndex*100);
+	
+	printf("Utilization of Time slot:\n");
+	printf("      Accepted Request:    -%.1f%\n", (double)Total_ReqAcc_SJF/bookingIndex*100);
+	
+	int i;
+	for(i=0;i<teamsIndex;i++){
+		printf("      %-20.10s -%.1f%\n",teamLists[i].name,(double)teamLists[i].ReqAcc_FCFS/teamLists[i].ReqRec*100);
+	}
+	printf("\n");
+	for(i=0;i<8;i++){
+		printf("      %-20.10s -%.1f%\n",staffNames[i],(double)staffAr_FCFS[i]/staffRr[i]*100);
+	}
+	
+	
+	printf("\n\nPerformance:--SJF\n");
+	printf("Total Number of Request Received: %d (%.1f%)\n",bookingIndex);
+	printf("      Number of Request Accepted: %d (%.1f%)\n",Total_ReqAcc_SJF, (double)Total_ReqAcc_SJF/bookingIndex*100);
+	printf("      Number of Request Rejected: %d (%.1f%)\n\n",Total_ReqRej_SJF, (double)Total_ReqRej_SJF/bookingIndex*100);
+	
+	printf("Utilization of Time slot:\n");
+	printf("      Accepted Request:    -%.1f%\n", (double)Total_ReqAcc_SJF/bookingIndex*100);
+	
+	for(i=0;i<teamsIndex;i++){
+		printf("      %-20.10s -%.1f%\n",teamLists[i].name,(double)teamLists[i].ReqAcc_SJF/teamLists[i].ReqRec*100);
+	}
+	printf("\n");
+	for(i=0;i<8;i++){
+		printf("      %-20.10s -%.1f%\n",staffNames[i],(double)staffAr_SJF[i]/staffRr[i]*100);
+	}
+	
+	printf("\nAttendance:\n");
+	for(i=0;i<8;i++){
+		printf("      %-20.10s -%.1f%\n",staffNames[i],staffAtten[i]);
+	}
+	
+	
+	printf("\n");
+	printf("\n");
+}
+
+
